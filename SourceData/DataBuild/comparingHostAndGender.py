@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import sklearn.linear_model as LinearRegression
 
-nameGender = pd.read_csv("../NameGenderProb/name_gender.csv")
+nameGender = pd.read_csv("../NameSourceData/genderProbability.csv")
 Listings = CleanBrowardListings().returnFrame()
 
 #returns a list of names not in the table (2669 thousand)
