@@ -1,3 +1,8 @@
-from SourceData.DataBuild.CleanFrame import CleanBrowardFrame
+from SourceData.DataBuild.CleanFrames import CleanBrowardListings, CleanBrowardCalendar, CleanBrowardReviews
 
-CleanBrowardFrame().DefineFrame()
+Listings = CleanBrowardListings().returnFrame()
+print(Listings)
+Calendar = CleanBrowardCalendar().returnFrame()
+print(Calendar)
+Reviews = CleanBrowardReviews().returnFrame()
+print(Reviews)
