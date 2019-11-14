@@ -1,4 +1,4 @@
-from SourceData.DataBuild.CleanFrames import CleanBrowardListings
+from notebookAirbnbBostonGender.SourceData.DataBuild.CleanFrames import CleanBrowardListings
 import pandas as pd
 import numpy as np
 import sklearn.linear_model as LinearRegression

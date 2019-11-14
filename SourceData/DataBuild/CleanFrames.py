@@ -18,6 +18,11 @@ class CleanBrowardListings(CleanFrame):
                                   'review_scores_accuracy': np.str})
         self.SkipRows = [1490, 1879, 1999, 2451, 4840, 5973, 6314, 6329, 6472, 6473, 6519, 6794, 8255, 9075, 10104]
         Listings = Listings.drop(self.SkipRows, axis=0)
+        #
+        # #loop and remove unnecessary columns
+        RemoveColumns = pd.read_csv("../../RemoveColumns.csv")
+        for ind in RemoveColumns.index:
+            Listings = Listings.drop(RemoveColumns['ColumnName'][ind], axis =1)
 
         # convert the "price column from strings with $ to numbers"
         Listings['price'] = Listings['price'].replace('[\$,]', '', regex=True).astype(float)
