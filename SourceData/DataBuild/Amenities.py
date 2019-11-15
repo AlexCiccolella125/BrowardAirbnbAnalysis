@@ -1,24 +1,25 @@
 import pandas
 import json
 import csv
-from notebookAirbnbBostonGender.SourceData.DataBuild.CleanFrames import CleanBrowardListings
+from SourceData.DataBuild.CleanFrames import CleanBrowardListings
 
-Listings = CleanBrowardListings().returnFrame()
+def clean_amenities(df):
+    def loop_till_comma(row):
+        item_list = row.split(",")
+        return item_list
 
-def LoopTillComma(row):
+    def clean_line(row):
+
+        return loop_till_comma(row.replace('"',''))
+
+    amenities_array = []
+    for index, row in df.iterrows():
+        amenities_array.append(clean_line(str(row['amenities']).strip("{}")))
+
+    for spool in amenities_array:
+        print(spool)
 
 
-def cleanLine(row):
-    row.toLower
-    for char in row:
-        if char == ",":
 
-for index, row in Listings.iterrows():
-    AmenitiesArray = str(row['amenities']).strip("{}")
-    AmenitiesArray = AmenitiesArray.ToLower()
-    for char in AmenitiesArray:
-
-    # data = json.loads(AmenitiesArray)
-    # # print(data)
-    # for item in AmenitiesArray:
-    #     print(item)
+listings = CleanBrowardListings().returnFrame()
+clean_amenities(listings)
