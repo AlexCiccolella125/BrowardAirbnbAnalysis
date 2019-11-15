@@ -68,7 +68,3 @@ class CleanBrowardReviews(CleanFrame):
     def __init__(self):
         reviews = pd.read_csv("../BrowardSourceData/reviews.csv")
         self.frame = reviews
-
-
-
-

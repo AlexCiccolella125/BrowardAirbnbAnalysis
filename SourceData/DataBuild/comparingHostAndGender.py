@@ -12,6 +12,9 @@ print(Listings[~Listings.host_name.isin(nameGender.name)].host_name)
 #returns name IN both tables (7545 thousand)
 print(Listings[Listings.host_name.isin(nameGender.name)].host_name)
 
+for index, row in Listings.iterrows():
+    print(row)
+
 print("NOT in SSA list: ", sum(1 for row in Listings[~Listings.host_name.isin(nameGender.name)].host_name))
 print("Names in SSA list: ", sum(1 for row in Listings[Listings.host_name.isin(nameGender.name)].host_name))
 print("Unique names: ", sum(1 for row in Listings['host_id'].unique()))
