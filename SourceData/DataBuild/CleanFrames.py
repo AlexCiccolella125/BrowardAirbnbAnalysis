@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from SourceData.DataBuild.Amenities import clean_amenities
 
 
 class CleanFrame:
@@ -11,7 +12,7 @@ class CleanFrame:
 class CleanBrowardListings(CleanFrame):
     def __init__(self):
         # reading the listings file
-        listings = pd.read_csv("../BrowardSourceData/listings.csv",
+        listings = pd.read_csv("bostonGenderAnalysis/SourceData/BrowardSourceData/listings.csv",
                                # sys:1: DtypeWarning flag is occurring, Columns (43,61,62) have mixed types, dtype is
                                # set to avoid issues.
                                dtype={'state': np.str,
@@ -24,7 +25,7 @@ class CleanBrowardListings(CleanFrame):
         listings = listings.drop(self.SkipRows, axis=0)
 
         # loop and remove unnecessary columns
-        remove_columns = pd.read_csv("../../RemoveColumns.csv")
+        remove_columns = pd.read_csv("bostonGenderAnalysis/RemoveColumns.csv")
         for ind in remove_columns.index:
             listings = listings.drop(remove_columns['ColumnName'][ind], axis=1)
 
@@ -32,17 +33,20 @@ class CleanBrowardListings(CleanFrame):
         listings['price'] = listings['price'].replace('[\$,]', '', regex=True).astype(float)
 
         # merge the gender data with Listings
-        gender = pd.read_csv("../NameSourceData/genderProbability.csv", index_col='name')
+        gender = pd.read_csv("bostonGenderAnalysis/SourceData/NameSourceData/genderProbability.csv", index_col='name')
         listings = listings.join(gender, on='host_name')
 
         # replacing all data that is not on the SSA list with 50% probability
         # the two main reason for NaN data are couples who listed both names and corporations that list properties.
         listings.probability = listings.probability.fillna(.5)
 
+        # apply clean amenities
+        listings = clean_amenities(listings)
+
         # Cleanup Complete
         self.frame = listings
 
-    def listing_define(self):
+    def listing_define(self):  # were made to run tests
         listings = self.frame
         print(len(listings['latitude'].unique()))  # output: 7730 unque latitude locations
         print(len(listings['longitude'].unique()))  # output 6720 unique longitude locations
@@ -51,9 +55,7 @@ class CleanBrowardListings(CleanFrame):
         plt.xlabel('prices of Airbnb Broward')
         plt.show()
 
-    def listing_errors(self):  # change this function so that it is called to dynamically generate the skiprows
-        #listings = pd.read_csv("../BrowardSourceData/listings.csv")
-
+    def listing_errors(self):  # Made to run tests
         # read rows that are causeing type errors
         print(self.loc[self.SkipRows, ['state', 'review_scores_rating', 'review_scores_accuracy']])
 
@@ -70,11 +72,11 @@ class CleanBrowardListings(CleanFrame):
 # Calendar and Reviews are here should more in depth analysis is necessary
 class CleanBrowardCalendar(CleanFrame):
     def __init__(self):
-        calendar = pd.read_csv("../BrowardSourceData/calendar.csv")
+        calendar = pd.read_csv("bostonGenderAnalysis/SourceData/BrowardSourceData/calendar.csv")
         self.frame = calendar
 
 
 class CleanBrowardReviews(CleanFrame):
     def __init__(self):
-        reviews = pd.read_csv("../BrowardSourceData/reviews.csv")
+        reviews = pd.read_csv("bostonGenderAnalysis/SourceData/BrowardSourceData/reviews.csv")
         self.frame = reviews

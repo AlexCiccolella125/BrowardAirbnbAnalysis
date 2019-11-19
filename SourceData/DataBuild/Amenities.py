@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 import statistics
 from pandas import Series
 
-from SourceData.DataBuild.CleanFrames import CleanBrowardListings
-
 
 def clean_amenities(df):
     # removes quotes and creates the list
@@ -56,7 +54,3 @@ def clean_amenities(df):
     # print(mean - 3 * stdev)
     # plt.boxplot(amendict.values())
     # plt.show()
-
-
-listings = CleanBrowardListings().returnFrame()
-print(clean_amenities(listings))
