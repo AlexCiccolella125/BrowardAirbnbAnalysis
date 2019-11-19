@@ -3,6 +3,6 @@ from SourceData.DataBuild.Amenities import clean_amenities
 from sklearn.linear_model import LinearRegression
 
 Listings = CleanBrowardListings().returnFrame()
-Listings = clean_amenities(Listings)
+# Listings = clean_amenities(Listings)
 print(Listings)
-Listings.to_csv(r'../Export.csv')
+Listings.to_csv(r'bostonGenderAnalysis/Export.csv')
