@@ -65,6 +65,11 @@ class CleanBrowardListings(CleanFrame):
         # apply clean amenities
         listings = clean_amenities(listings)
 
+        # loop and remove categorical columns already converted to dummy data
+        remove_columns = pd.read_csv("postDummyRemove.csv")
+        for ind in remove_columns.index:
+            listings = listings.drop(remove_columns['ColumnName'][ind], axis=1)
+
         # drop all rows & columns with missing data
         listings.dropna(axis=1, inplace=True)
         listings.dropna(axis=0, inplace=True)
