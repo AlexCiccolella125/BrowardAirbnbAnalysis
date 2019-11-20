@@ -5,9 +5,6 @@ group3 world happyness
 	
 
 
-    remove:
-    review scores, etc
-
     make binary:
     host is superhost
     host_identity_verified

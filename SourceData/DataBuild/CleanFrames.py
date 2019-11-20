@@ -32,6 +32,8 @@ class CleanBrowardListings(CleanFrame):
         # convert the "price column from strings with $ to numbers"
         listings['price'] = listings['price'].replace('[\$,]', '', regex=True).astype(float)
 
+        #convert T or F into Binary 1 and 0 respectively
+
         # merge the gender data with Listings and with corrected probabilities
         gender = pd.read_csv("SourceData/NameSourceData/genderProbability.csv", index_col='name')
         gender['probability'] = gender.apply(lambda x: x['probability'] if x['gender'] == 'M' else 1 - x['probability'],
