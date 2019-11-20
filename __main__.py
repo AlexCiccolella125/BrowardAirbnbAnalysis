@@ -5,5 +5,5 @@ import pandas as pd
 
 
 Listings = CleanBrowardListings().return_frame()
-# print(Listings["cleaning_fee"])
+print(Listings)
 Listings.to_csv(r'Export.csv')

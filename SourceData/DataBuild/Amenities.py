@@ -43,7 +43,7 @@ def clean_amenities(df):
     # print(dummyframe)
     amenities_dict = pd.Series(amenities_dict)
     dummyframe = pd.get_dummies(amenities_dict.apply(pd.Series).stack()).sum(level=0)
-    df = df.join(dummyframe, on='host_id')
+    df = df.join(dummyframe, on='host_id', rsuffix='_amen')
     return df
 
     # print(sorted(((value, key) for (key, value) in amendict.items()), reverse=True))

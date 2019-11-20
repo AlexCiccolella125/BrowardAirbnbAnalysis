@@ -45,7 +45,11 @@ class CleanBrowardListings(CleanFrame):
 
         # remove % from host_response_rate
         listings['host_response_rate'] = listings['host_response_rate'].replace('[\%]', '', regex=True).astype(float)
-        print(listings['host_response_rate'])
+
+        # make dummmy variables from room_type, property type, bed_type, city
+        for column in ["room_type", "property_type", "bed_type", "city"]:
+            dummmyframe = pd.get_dummies(listings[column].str.lower())
+            listings = listings.join(dummmyframe, rsuffix='_dummy')
 
         # read gender csv
         gender = pd.read_csv("SourceData/NameSourceData/genderProbability.csv", index_col='name')
@@ -60,6 +64,10 @@ class CleanBrowardListings(CleanFrame):
 
         # apply clean amenities
         listings = clean_amenities(listings)
+
+        # drop all rows & columns with missing data
+        listings.dropna(axis=1, inplace=True)
+        listings.dropna(axis=0, inplace=True)
 
         # Cleanup Complete
         self.frame = listings
@@ -82,16 +90,3 @@ class CleanBrowardListings(CleanFrame):
         print(num_of_true)
         return cal_obj[cal_obj == True].index
         # output: [1490, 1879, 1999, 2451, 4840, 5973, 6314, 6329, 6472, 6473, 6519, 6794, 8255, 9075, 10104]
-
-
-# Calendar and Reviews are here should more in depth analysis is necessary
-class CleanBrowardCalendar(CleanFrame):
-    def __init__(self):
-        calendar = pd.read_csv("SourceData/BrowardSourceData/calendar.csv")
-        self.frame = calendar
-
-
-class CleanBrowardReviews(CleanFrame):
-    def __init__(self):
-        reviews = pd.read_csv("SourceData/BrowardSourceData/reviews.csv")
-        self.frame = reviews

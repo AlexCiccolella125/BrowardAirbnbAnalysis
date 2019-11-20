@@ -7,19 +7,6 @@ group3 world happyness
 
 
 
-
-    create dummy variables:
-    room type
-    property type
-    bed_type
-    city
-
-    remove empty:
-    bathrooms, bedrooms beds
-
-
-
-
 	what is the objective of the project
 	is that all positive coreelation? in respect to happiness.
 	we need to see if the relationships make sense.
