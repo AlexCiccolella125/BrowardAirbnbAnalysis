@@ -5,15 +5,8 @@ group3 world happyness
 	
 
 
-    make binary:
-    host is superhost
-    host_identity_verified
-    Host_ha
 
-    make zero if empty:
-    security deposit
-    cleaning fee
-    host_response_rate
+
 
     create dummy variables:
     room type

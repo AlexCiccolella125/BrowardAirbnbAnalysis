@@ -1,7 +1,7 @@
 from SourceData.DataBuild.CleanFrames import CleanBrowardListings, CleanBrowardCalendar, CleanBrowardReviews
-Listings = CleanBrowardListings().returnFrame()
+Listings = CleanBrowardListings().return_frame()
 print(Listings)
-Calendar = CleanBrowardCalendar().returnFrame()
+Calendar = CleanBrowardCalendar().return_frame()
 print(Calendar)
-Reviews = CleanBrowardReviews().returnFrame()
+Reviews = CleanBrowardReviews().return_frame()
 print(Reviews)

@@ -54,3 +54,10 @@ def clean_amenities(df):
     # print(mean - 3 * stdev)
     # plt.boxplot(amendict.values())
     # plt.show()
+
+
+def convert_boolean(df, columns):   # array of columns to manipulate is passed
+    for column in columns:
+        df[column] = df.apply(lambda x: 1 if x[column] == 't' else 0, axis=1)
+    return df
+

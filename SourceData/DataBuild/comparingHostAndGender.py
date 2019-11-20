@@ -4,7 +4,7 @@ import numpy as np
 import sklearn.linear_model as LinearRegression
 
 nameGender = pd.read_csv("../NameSourceData/genderProbability.csv")
-Listings = CleanBrowardListings().returnFrame()
+Listings = CleanBrowardListings().return_frame()
 
 #returns a list of names not in the table (2669 thousand)
 print(Listings[~Listings.host_name.isin(nameGender.name)].host_name)

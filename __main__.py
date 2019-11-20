@@ -4,6 +4,6 @@ from sklearn.linear_model import LinearRegression
 import pandas as pd
 
 
-Listings = CleanBrowardListings().returnFrame()
-print(Listings)
+Listings = CleanBrowardListings().return_frame()
+# print(Listings["cleaning_fee"])
 Listings.to_csv(r'Export.csv')

@@ -1,11 +1,11 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from SourceData.DataBuild.Amenities import clean_amenities
+from SourceData.DataBuild.Amenities import clean_amenities, convert_boolean
 
 
 class CleanFrame:
-    def returnFrame(self):
+    def return_frame(self):
         return self.frame
 
 
@@ -32,10 +32,24 @@ class CleanBrowardListings(CleanFrame):
         # convert the "price column from strings with $ to numbers"
         listings['price'] = listings['price'].replace('[\$,]', '', regex=True).astype(float)
 
-        #convert T or F into Binary 1 and 0 respectively
+        # convert T or F into Binary 1 and 0 respectively
+        listings = convert_boolean(listings, ["host_is_superhost", "host_has_profile_pic", "host_identity_verified"])
 
-        # merge the gender data with Listings and with corrected probabilities
+        # add 0 to empty rows
+        for column in ["security_deposit", "cleaning_fee", "host_response_rate"]:
+            listings[column].fillna(0, inplace=True)
+
+        # remove $ from monetary values
+        for column in ["security_deposit", "cleaning_fee", "extra_people"]:
+            listings[column] = listings[column].replace('[\$,]', '', regex=True).astype(float)
+
+        # remove % from host_response_rate
+        listings['host_response_rate'] = listings['host_response_rate'].replace('[\%]', '', regex=True).astype(float)
+        print(listings['host_response_rate'])
+
+        # read gender csv
         gender = pd.read_csv("SourceData/NameSourceData/genderProbability.csv", index_col='name')
+        # merge the gender data with corrected probabilities and Listings
         gender['probability'] = gender.apply(lambda x: x['probability'] if x['gender'] == 'M' else 1 - x['probability'],
                                              axis=1)
         listings = listings.join(gender, on='host_name')
@@ -50,7 +64,7 @@ class CleanBrowardListings(CleanFrame):
         # Cleanup Complete
         self.frame = listings
 
-    def listing_define(self):  # were made to run tests
+    def listing_define(self):  # were made for discovery and testing
         listings = self.frame
         print(len(listings['latitude'].unique()))  # output: 7730 unque latitude locations
         print(len(listings['longitude'].unique()))  # output 6720 unique longitude locations
@@ -59,10 +73,7 @@ class CleanBrowardListings(CleanFrame):
         plt.xlabel('prices of Airbnb Broward')
         plt.show()
 
-    def listing_errors(self):  # Made to run tests
-        # read rows that are causeing type errors
-        print(self.loc[self.SkipRows, ['state', 'review_scores_rating', 'review_scores_accuracy']])
-
+    def list_type_errors(self):  # were made for discovery and testing
         # looks for rows where state is not equal to "FL"
         cal_obj = self.apply(lambda x: False if x['state'] == "FL" or x['state'] == "NaN" else True, axis=1)
 
