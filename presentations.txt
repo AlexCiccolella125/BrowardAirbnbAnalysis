@@ -5,6 +5,30 @@ group3 world happyness
 	
 
 
+    remove:
+    review scores, etc
+
+    make binary:
+    host is superhost
+    host_identity_verified
+    Host_ha
+
+    make zero if empty:
+    security deposit
+    cleaning fee
+    host_response_rate
+
+    create dummy variables:
+    room type
+    property type
+    bed_type
+    city
+
+    remove empty:
+    bathrooms, bedrooms beds
+
+
+
 
 	what is the objective of the project
 	is that all positive coreelation? in respect to happiness.
