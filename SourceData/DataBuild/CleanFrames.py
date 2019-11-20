@@ -32,10 +32,10 @@ class CleanBrowardListings(CleanFrame):
         # convert the "price column from strings with $ to numbers"
         listings['price'] = listings['price'].replace('[\$,]', '', regex=True).astype(float)
 
-        # merge the gender data with Listings
+        # merge the gender data with Listings and with corrected probabilities
         gender = pd.read_csv("SourceData/NameSourceData/genderProbability.csv", index_col='name')
-        for row in gender.iteritems():
-            print(row)
+        gender['probability'] = gender.apply(lambda x: x['probability'] if x['gender'] == 'M' else 1 - x['probability'],
+                                             axis=1)
         listings = listings.join(gender, on='host_name')
 
         # replacing all data that is not on the SSA list with 50% probability
