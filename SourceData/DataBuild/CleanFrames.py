@@ -12,7 +12,7 @@ class CleanFrame:
 class CleanBrowardListings(CleanFrame):
     def __init__(self):
         # reading the listings file
-        listings = pd.read_csv("bostonGenderAnalysis/SourceData/BrowardSourceData/listings.csv",
+        listings = pd.read_csv("SourceData/BrowardSourceData/listings.csv",
                                # sys:1: DtypeWarning flag is occurring, Columns (43,61,62) have mixed types, dtype is
                                # set to avoid issues.
                                dtype={'state': np.str,
@@ -25,7 +25,7 @@ class CleanBrowardListings(CleanFrame):
         listings = listings.drop(self.SkipRows, axis=0)
 
         # loop and remove unnecessary columns
-        remove_columns = pd.read_csv("bostonGenderAnalysis/RemoveColumns.csv")
+        remove_columns = pd.read_csv("RemoveColumns.csv")
         for ind in remove_columns.index:
             listings = listings.drop(remove_columns['ColumnName'][ind], axis=1)
 
@@ -33,7 +33,9 @@ class CleanBrowardListings(CleanFrame):
         listings['price'] = listings['price'].replace('[\$,]', '', regex=True).astype(float)
 
         # merge the gender data with Listings
-        gender = pd.read_csv("bostonGenderAnalysis/SourceData/NameSourceData/genderProbability.csv", index_col='name')
+        gender = pd.read_csv("SourceData/NameSourceData/genderProbability.csv", index_col='name')
+        for row in gender.iteritems():
+            print(row)
         listings = listings.join(gender, on='host_name')
 
         # replacing all data that is not on the SSA list with 50% probability
@@ -72,11 +74,11 @@ class CleanBrowardListings(CleanFrame):
 # Calendar and Reviews are here should more in depth analysis is necessary
 class CleanBrowardCalendar(CleanFrame):
     def __init__(self):
-        calendar = pd.read_csv("bostonGenderAnalysis/SourceData/BrowardSourceData/calendar.csv")
+        calendar = pd.read_csv("SourceData/BrowardSourceData/calendar.csv")
         self.frame = calendar
 
 
 class CleanBrowardReviews(CleanFrame):
     def __init__(self):
-        reviews = pd.read_csv("bostonGenderAnalysis/SourceData/BrowardSourceData/reviews.csv")
+        reviews = pd.read_csv("SourceData/BrowardSourceData/reviews.csv")
         self.frame = reviews

@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-Calendar = pd.read_csv("../bostonAirbnb/calendar.csv")
+# Calendar = pd.read_csv("AirbnbData/bostonAirbnb/calendar.csv")
 # print(Calendar.listing_id.unique())
 
 #I am looking for the average number of days a listing is available for
@@ -20,7 +20,7 @@ Calendar = pd.read_csv("../bostonAirbnb/calendar.csv")
 # Calendar_not_365 = CalOBJ[CalOBJ.date > 365]
 # print(Calendar_not_365)
 
-print(Calendar[Calendar.listing_id.unique < 365])
+# print(Calendar[Calendar.listing_id.unique < 365])
 
 #
 # Calendar_not_365 = Calendar[Calendar.listing_id == 12898806]
